@@ -1,38 +1,122 @@
-.App {
-  text-align: center;
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+.form-page{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height:100vh;
+    background-color: rgb(23, 23, 68);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.form-page form{
+    display: relative;
+    height: 50%;
+    width: 500px;
+    background-color: rgb(32, 32, 92);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.form-page form input{
+    display: absolute;
+    height: 30px;
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid rgb(109, 20, 20); 
+    border-radius: 10px;
+    padding: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.form-page form input::placeholder{
+    text-align: center;
 }
 
-.App-link {
-  color: #61dafb;
+.form-page form button{
+    height: 10%;
+    width: 40%;
+    border-radius: 15px;
+    border: 0px;
+    background-color: rgb(0, 89, 255);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* agent form */
+
+.agent-form{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.274);
+}
+
+.agent-form form{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: space-around;
+    padding: 30px;
+    background-color: white;
+}
+
+.agent-form form input[type=text]{
+    margin-top: 30px;
+    border:1px solid grey;
+    border-radius: 5px;
+    height: 30px;
+}
+
+.agent-form form label{
+    margin:0px 8px;
+
+}
+
+.agent-form form span{
+    color: rgb(201, 0, 0);
+    font-family: sans-serif;
+}
+
+.agent-form form .agent-s-btn{
+    margin-top: 30px;
+    border:1px solid #1976D2;
+    border-radius: 5px;
+    height: 40px;
+    transition: all ease-in 180ms;
+    cursor: pointer;
+}
+
+.agent-form form .agent-s-btn:hover{
+    background-color: #1976D2;
+    color: white;
+}
+
+.delete-page{
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+width: 100%;
+flex-direction: column;
+background-color: rgba(0, 0, 0, 0.493);
+}
+
+.delete-box{
+    position: relative;
+    border-radius: 8px;
+    background-color: white;
+    display: flex;
+justify-content: space-around;
+align-items: center;
+height: 50%;
+width: 50%;
+flex-direction: column;
 }
