@@ -1,5 +1,5 @@
 import react from "react";
-import '../app.css'
+import '../App.css'
 class CustomerForm extends react.Component{
     constructor(props){
     super(props)
