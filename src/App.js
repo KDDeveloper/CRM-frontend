@@ -11,7 +11,7 @@ import Statistics from './components/Statistics';
 import DeleteEntry from "./components/DeleteBox"
 import {BrowserRouter as Router,Routes,Route,Navigate} from "react-router-dom";
 import AgentAllotedRequest from "./components/agentAllotedRequest";
-import './app.css';
+import '../src/app.css';
 import Summary from "./components/summary";
 
 function App() {
