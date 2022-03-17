@@ -1,5 +1,5 @@
 import react ,{useEffect, useState}from "react";
-import '../app.css'
+import '../App.css'
 import axios from "axios"
 import {useNavigate,Navigate,Link as RouterLink} from "react-router-dom"
 import {useSelector,useDispatch} from "react-redux"
