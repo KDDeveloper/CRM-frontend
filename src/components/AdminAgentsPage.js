@@ -15,7 +15,8 @@ export default function AdminAgentsPage (props){
             onRequestSort(event, property);
         };
 
-        const [agentList, setAgentList] = useState([])
+        const [agentList, setAgentList] = useState([]);
+        const [agentAssignedRequest, setAgentAssignedRequest] = useState([]);
 
         const navigate = useNavigate()
         const config = {
@@ -29,16 +30,30 @@ export default function AdminAgentsPage (props){
            try{
                const {data} =  await axios.get('http://localhost:3000/agent/all',config);
                 setAgentList(data);
+
+                agentList.map((el)=>{
+                    setAgentAssignedRequest(agentAssignedRequest=>[...agentAssignedRequest,el.assignedRequest])
+                })
+
+
+                
+                
            }
             catch(err){
                window.alert("token Expired! Please login again");
                navigate("/login")
            }
+          
+          
         }
+
+        
 
         useEffect(()=>{
             getAllAgents();
             console.log(agentList,"12345");
+            
+            console.log(agentAssignedRequest)
         },[])
 
     return(
@@ -77,8 +92,8 @@ export default function AdminAgentsPage (props){
                                     <TableCell>{agent.gender}</TableCell>
                                     <TableCell>{agent.age}</TableCell>
                                     <TableCell>{agent.emailId}</TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
+                                    <TableCell>{agent.assignedRequest.length}</TableCell>
+                                    <TableCell>{agent.completedAssignment}</TableCell>
                                     {/* <TableCell><Button>View more</Button></TableCell>  */}
                                 </TableRow>
                             )})}

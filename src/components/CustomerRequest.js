@@ -3,12 +3,14 @@ import axios from "axios";
 import { useEffect,useState } from "react";
 import {Grid,Box,AppBar, Toolbar, IconButton,SwipeableDrawer,Divider, Link, Avatar,Typography, Button} from "@mui/material";
 import {Table,TableContainer,TableBody,TableHead,TableCell,TableRow,Checkbox,} from "@mui/material";
-import {PersonAdd,Menu} from "@mui/icons-material"
+import {PersonAdd,Menu} from "@mui/icons-material";
+
 import "../app.css";
 
 
 export default function CustomerRequestPage () {
     
+   
     const [customerRequestList,setCustomerRequestList] = useState([]);
     const navigate = useNavigate()
 
@@ -35,7 +37,9 @@ export default function CustomerRequestPage () {
     }
 
     useEffect(() => {
-        getCustomerReq()
+        getCustomerReq();
+        
+
     }, [])
 
     return(
@@ -52,6 +56,7 @@ export default function CustomerRequestPage () {
                             <TableCell>Mobile number</TableCell>
                             <TableCell>Email-id</TableCell>
                             <TableCell>Assigned to</TableCell>
+                            <TableCell>Status</TableCell>
                             <TableCell></TableCell>
                         </TableHead>
                         <TableBody>
@@ -62,6 +67,8 @@ export default function CustomerRequestPage () {
                                     <TableCell>{agent.age}</TableCell>
                                     <TableCell>{agent.mobileNumber}</TableCell>
                                     <TableCell>{agent.emailId}</TableCell>
+                                    <TableCell>{agent.assignedTo}</TableCell>
+                                    <TableCell>{agent.status}</TableCell>
                                     <TableCell></TableCell>
                                     <TableCell><RouterLink to={`/adminpage/singlecustomerrequest/${agent._id}`} style={{textDecoration:"none"}} ><Button variant="outlined">View more</Button></RouterLink></TableCell>
                                     {/* <TableCell><Button>View more</Button></TableCell>  */}

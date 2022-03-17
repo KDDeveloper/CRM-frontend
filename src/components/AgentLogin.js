@@ -1,59 +1,51 @@
-import react ,{useEffect, useState}from "react";
-import '../app.css'
-import axios from "axios"
-import {useNavigate,Navigate,Link as RouterLink} from "react-router-dom"
-import {useSelector,useDispatch} from "react-redux"
-import { adminLoginAction } from "./redux";
+import react ,{useState,useEffect}from "react";
+import '../app.css';
+import axios from "axios";
+import {useNavigate,Navigate,Link as RouterLink} from "react-router-dom";
 
-function Login (props) {
+function AgentLogin ({setAgentId}) {
     const [emailId,setEmailId]=useState("")
     const [password,setPassword]=useState("")
     // const [jwt,setJwt]=useState("")
     const navigate = useNavigate()
-    const adminLogin = useSelector(state=>state.adminLogin);
-    const dispatch = useDispatch()
-    console.log(adminLogin)
 
  const login = async(e)=>{
     e.preventDefault();
-    
+
    try{ 
-        const data = await axios.post("http://localhost:3000/admin/login",{
+        const data = await axios.post("http://localhost:3000/agent/login",{
         emailId,
         password,
         },{withCredentials: true, credentials: 'include'})
-        // console.log(emailId)
+        console.log(data)
         // this.setState({login:true})
         const jwt = data.data.authToken
-        console.log(data)
+        setAgentId(data.data)
         if(data.status===200){
-        navigate('/adminpage/customerRequest',{state:"admin"}
-        )
-       
-        dispatch(adminLoginAction())
+            localStorage.setItem("agentId",data.data)
+        navigate('/adminpage/allotedRequest')
         }
-        
     } 
     catch (err){
             window.alert(err.response.data.error);
 
         }
-        sessionStorage.setItem("userType","admin");
     // console.log(jwt)
 }
-
-    useEffect(()=>{
-        window.sessionStorage.setItem("userType","admin");
-    },[])
     // if(this.state.login){
     //     return(    <Navigate to="/adminpage" jwt={this.state.jwt}/>)
     // } 
     // else{ 
+
+        useEffect(()=>{
+            window.sessionStorage.setItem("userType","agent");
+        },[])
+
     return(
         <>
         <div className="form-page">
             <form onSubmit={login}>
-            <h1 style={{color:"white", fontFamily:"sans-serif"}}>Admin login</h1>
+            <h1 style={{color:"white", fontFamily:"sans-serif"}}>Agent login</h1>
             <div>
             <label></label>
             <input type="text" name="emailId" value={emailId} placeholder="Email Id" onChange={e=>setEmailId(e.target.value)}></input>
@@ -64,7 +56,7 @@ function Login (props) {
             </div>
             <button type="submit">Login</button>
             </form>
-        <RouterLink style={{color:"white",textDecoration:"none"}} to="/agentlogin"><p>Are you an existing Agent? Click here.</p></RouterLink>
+            <RouterLink style={{color:"white",textDecoration:"none"}}to="/login"><p>Are you an Admin? Click here.</p></RouterLink>
         </div>
         </>
     )
@@ -72,4 +64,4 @@ function Login (props) {
 }
 
 
-export default Login
+export default AgentLogin

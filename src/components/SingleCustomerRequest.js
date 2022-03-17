@@ -12,10 +12,11 @@ export default function SingleCustomerRequest (props) {
     const [assignedTo, setAssignedTo] = useState('');
     const [assigned, setAssigned] = useState(true);
     const [agentId, setAgentId] = useState('');
+    
 
     const config = {
         headers: {
-            Accept: 'application/json',
+            Accept: 'application/json; charset=utf-8',
             'Content-Type': 'application/json',
           },
           withCredentials:true
@@ -25,8 +26,12 @@ export default function SingleCustomerRequest (props) {
        try{
            const {data} = await axios.get(`http://localhost:3000/customerRequestByAdmin/${id}`,config)
         setCustomerRequest([data]);
+        setAgentId(data.agentId)
         if(data.assignedTo!==""){
-            setAssigned(false)
+            setAssigned(false);
+            
+        // console.log(agentId)
+           
         }
        }
        catch(error){
@@ -35,7 +40,7 @@ export default function SingleCustomerRequest (props) {
        }
 
    }
-   console.log(assignedTo)
+   console.log(agentId)
    console.log(customerRequest)
 
    const getAgents = async() =>{
@@ -58,6 +63,29 @@ export default function SingleCustomerRequest (props) {
 
    }
 
+   const addCustomerReqtoAgentArray = async()=>{
+
+    console.log(agentId, id)
+    try{
+        const agent = await axios.patch(`http://localhost:3000/customerRequestByAdmin/agentassigned/${agentId}`,{
+            id,
+        },config)
+    }
+    catch(error){
+
+    }
+   }
+
+   const removeCustomerReqtoAgentArray = async()=>{
+    console.log(typeof id)
+    try{
+        
+    }
+    catch(error){
+
+    }
+   }
+
     const updateCustomerAssignment = async()=>{
         try{
             
@@ -67,13 +95,22 @@ export default function SingleCustomerRequest (props) {
                 status:"assigned",
                 agentId
             },config);
+
+           
             
             console.log(customerRequest)
         }
         catch(error){}
+
+        
+       
+
+       
     }
 
     const unassignAgent = async() => {
+        // e.preventDefault()
+        console.log(id, agentId)
         try{
             
              
@@ -82,28 +119,43 @@ export default function SingleCustomerRequest (props) {
                 status:"New lead"
                 // agentId,
             },config);
-            window.location.reload(false);            
-            // console.log(customerRequest);
-            // console.log(assignedTo)
+
+            const agent = await axios.delete(`http://localhost:3000/customerRequestByAdmin/agentunassigned/${agentId}`,{
+               data:{id: id},
+            },{
+                headers: {
+                    Accept: 'application/json; charset=utf-8',
+                    'Content-Type': 'application/json',
+                  },
+                  withCredentials:true
+                })
+            window.location.reload(false);
         }
-        catch(error){}
+        catch(error){
+            // window.alert("there was an error unassigning request. contact the developer")
+        }
+        
+       
     }
 
    const assignAgent = (e) => {
         // e.preventDefault();
         updateCustomerAssignment();
+        addCustomerReqtoAgentArray();
 
    }
 
    useEffect(() => {
        getCustomerRequest();
         getAgents();
+        
+        
    }, [])
 
    useEffect(()=>{},[assignAgent]);
     return(
         <>
-        <Grid style={{marginTop:"100px"}}>
+        <Grid style={{marginTop:"100px",height:"100%"}}>
        <RouterLink to="/adminpage/customerRequest"> <IconButton>
             <ArrowBack/>
         </IconButton></RouterLink>
@@ -144,7 +196,7 @@ export default function SingleCustomerRequest (props) {
                 
                 }
             </select>
-            <Button type="submit" size="small" style={{marginLeft:"10px"}} variant="contained">Assign</Button>            
+            <Button type="submit" disabled={!assigned} size="small" style={{marginLeft:"10px"}} variant="contained">Assign</Button>            
             <Button onClick={unassignAgent} size="small" style={{marginLeft:"10px"}} variant="contained" disabled={assigned}>Unassign</Button>
             {/* style={{color:"white", background:"#1976D2", height:'30px', width:'60px', border:"none",borderRadius:"5px", marginLeft:"20px"}}            */}
         </form>

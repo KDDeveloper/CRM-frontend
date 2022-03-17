@@ -2,14 +2,23 @@ import react, { useState, useEffect } from "react";
 import {Grid,Box,AppBar, Toolbar, IconButton,SwipeableDrawer,Divider, Link, Avatar} from "@mui/material";
 import {Menu as MenuIcon,ChevronLeft} from "@mui/icons-material";
 import {makeStyles} from "@mui/styles"
-import {Link as RouterLink, Outlet} from "react-router-dom"
+import {Link as RouterLink, Outlet,useLocation, useNavigate} from "react-router-dom"
 import axios from "axios";
 import cookie from "js-cookie";
-const navigationLinks = [
-    {name:"Customer Requests",link:"/adminpage/customerRequest"},
-    {name:"Statistics", link:"/adminpage/statistics"},
-    {name:"Agents", link:"/adminpage/agents"},
+import { useSelector } from "react-redux";
+import { useCookies } from "react-cookie";
+
+
+let adminNavOp = [
+    {name:"Customer Requests", link:"/adminpage/customerRequest"},
+    // {name:"Statistics", link:"/adminpage/statistics"},
+    {name:"Agents", link:"/adminpage/agents"}
 ]
+let agentNavOp = [
+    {name:"Alloted request", link:"/adminpage/allotedRequest"},
+    // {name:"Statistics", link:"/adminpage/statistics"},
+]
+
 
 const useStyles = makeStyles({
     link:{
@@ -25,7 +34,44 @@ const useStyles = makeStyles({
     }
 })
 export default function AdminPage (props){
+
+    let navigate = useNavigate();
+    let [cookies,setCookie,removeCookie] = useCookies(["jwt"])
+    let [agentCookies,setAgentCookie,removeAgentCookie] = useCookies(["agentToken"])
+    let userType = window.sessionStorage.getItem("userType");
+    // const {state} = useLocation();
+    const adminLogin = useSelector(state=>state.adminLogin)
+
+const [adminNavigationLinks,setAdminNavigationLinks] = useState(userType==="admin"?adminNavOp:agentNavOp);
+
+const logout = async() =>{
+    if(userType==="admin"){
+      const data = await axios.get("http://localhost:3000/admin/logout",{withCredentials: true, credentials: 'include'})
+      console.log(data)
+      navigate("/login")
+    }
+
+    if(userType==="agent"){
+    //   const data = await axios.get("http://localhost:3000/admin/logout",{withCredentials: true, credentials: 'include'})
+    //   console.log(data);
+        navigate("/agentlogin")
+    }
+}
+
+useEffect(()=>{
+    console.log(userType)
+    if(userType==="admin"){
+
+        
+        
+        setAdminNavigationLinks(adminNavOp)
+    }
+
+    console.log(adminNavigationLinks)
     
+        
+})
+// console.log(navigationLinks);
     const styles = useStyles();
     const[open,setOpen]= useState(false);
 
@@ -48,9 +94,10 @@ export default function AdminPage (props){
                             </IconButton>
                             </div>
                             <Divider/>
-                            {navigationLinks.map((item)=>{return(
+                            {adminNavigationLinks.map((item)=>{return(
                               <RouterLink key={item.name} className={styles.link} to={item.link} style={{textDecoration:'none'}}><Link color="textPrimary" underline="none" variant="button">{item.name}</Link></RouterLink>
                             )})}
+                            <Link color="textPrimary" underline="none" variant="button" style={{cursor:"pointer",display:"block",margin:"20px"}} onClick={logout}>Logout</Link>
                         </SwipeableDrawer>
                     </AppBar>
                 </Box>
