@@ -43,7 +43,7 @@ export default function AdminAgentForm (props){
     const addAgent = async()=>{
         const {firstName, lastName, gender, age, emailId,password} = formValues
         try {
-            const data = await axios.post("http://localhost:3000/agent/add",{
+            const data = await axios.post("https://kd-crm-backend.herokuapp.com/agent/add",{
                 firstName,
                 lastName,
                 gender,

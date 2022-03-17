@@ -28,7 +28,7 @@ export default function AdminAgentsPage (props){
             }
         const getAllAgents = async()=>{
            try{
-               const {data} =  await axios.get('http://localhost:3000/agent/all',config);
+               const {data} =  await axios.get('https://kd-crm-backend.herokuapp.com/agent/all',config);
                 setAgentList(data);
 
                 agentList.map((el)=>{

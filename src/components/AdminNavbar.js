@@ -46,13 +46,13 @@ const [adminNavigationLinks,setAdminNavigationLinks] = useState(userType==="admi
 
 const logout = async() =>{
     if(userType==="admin"){
-      const data = await axios.get("http://localhost:3000/admin/logout",{withCredentials: true, credentials: 'include'})
+      const data = await axios.get("https://kd-crm-backend.herokuapp.com/admin/logout",{withCredentials: true, credentials: 'include'})
       console.log(data)
       navigate("/login")
     }
 
     if(userType==="agent"){
-    //   const data = await axios.get("http://localhost:3000/admin/logout",{withCredentials: true, credentials: 'include'})
+    //   const data = await axios.get("https://kd-crm-backend.herokuapp.com/admin/logout",{withCredentials: true, credentials: 'include'})
     //   console.log(data);
         navigate("/agentlogin")
     }

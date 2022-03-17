@@ -20,7 +20,7 @@ const AgentAllotedRequest = () =>{
         const [reqId, setreqId] = useState("");
 
         const updateCompletedRequests = async() =>{
-            let data = await axios.patch(`http://localhost:3000/agent/agentcompletedreq/${agentId}`,{
+            let data = await axios.patch(`https://kd-crm-backend.herokuapp.com/agent/agentcompletedreq/${agentId}`,{
                 completedAssignment: reqStatusProcessed,
                     },config);
                 console.log(data);
@@ -28,7 +28,7 @@ const AgentAllotedRequest = () =>{
 
     const getAllotedReq = async()=>{
         try{
-            let {data} = await axios.get(`http://localhost:3000/agent/allotedRequest/${agentId}`,config);
+            let {data} = await axios.get(`https://kd-crm-backend.herokuapp.com/agent/allotedRequest/${agentId}`,config);
             setAllotedReq(data);
 
             data.map(el=>{
@@ -54,7 +54,7 @@ const AgentAllotedRequest = () =>{
         console.log(key)
         setreqId(name)
         console.log(reqStatus, reqId)
-        // const {data} = await axios.get(`http://localhost:3000/agent//${name}`)
+        // const {data} = await axios.get(`https://kd-crm-backend.herokuapp.com/agent//${name}`)
         
 
    }
@@ -63,7 +63,7 @@ const AgentAllotedRequest = () =>{
         e.preventDefault();
         try{
         if(reqStatus!==""){
-        let data = await axios.patch(`http://localhost:3000/agent/changeStatus/${reqId}`,{
+        let data = await axios.patch(`https://kd-crm-backend.herokuapp.com/agent/changeStatus/${reqId}`,{
             reqStatus,
         },config);
 

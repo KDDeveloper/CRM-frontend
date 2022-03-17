@@ -24,7 +24,7 @@ export default function CustomerRequestPage () {
     
    const getCustomerReq = async() => {
        try{ 
-           const {data}= await axios.get("http://localhost:3000/customerRequestByAdmin",config)
+           const {data}= await axios.get("https://kd-crm-backend.herokuapp.com/customerRequestByAdmin",config)
         setCustomerRequestList(data)
         // console.log(data.status)
     }
